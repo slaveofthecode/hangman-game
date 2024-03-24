@@ -12,30 +12,33 @@ type Props = {
 const index = ({ hiddenWord }: Props) => {
 
         console.log('HiddenWord', {hiddenWord})
-    
+        
         const { 
             hiddenWord2, 
             setHiddenWord2, 
             letterTyped2,
             setLetterTyped2 
         } = useContext(Context);
-
-
         
         useEffect(() => {
-
+            
             const eventKeyUp = (evt: KeyboardEvent) => {
-        
+                
                 const letterEntered = evt.key;
                 
                 if ( !letters.has(letterEntered) ) {
-                     letters.add(letterEntered);
-                     setLetterTyped2(letterEntered);
+                    letters.add(letterEntered);
+                    setLetterTyped2(letterEntered);
                 }
-        
+                
             };
-        
+            
             window.addEventListener('keyup', eventKeyUp);
+            
+            // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);            
+            // if (hiddenWordRef.current && isMobile)
+            //     hiddenWordRef.current.focus();
+              
         
             return () => {
               window.removeEventListener('keyup', eventKeyUp);
@@ -75,14 +78,14 @@ const index = ({ hiddenWord }: Props) => {
         },[hiddenWord]);
 
         return (
-            <div>
+            <div>                
                 {
                     hiddenWord2?.map((letter: string, index: number) => {
                         return (
                             <span
                                 key={`${letter}-${index}`}
                                 id={`${letter}-${index}`}
-                                className='p-2 mx-2 border-1 border-b-2 border-b-gray-200 text-4xl outline-none'
+                                className='p-2 mx-2 border-1 border-b-2 border-b-gray-200 text-4xl outline-none'                                
                             >{letter}</span>
                         );
                     })
