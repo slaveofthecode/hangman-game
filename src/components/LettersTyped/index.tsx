@@ -1,20 +1,22 @@
-import React from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useContext } from "react";
+import { Context } from "../../context";
 
-type Props = {
-    letterTyped: string;
-}
+const index = () => {  
 
+    const { allLetterTyped } : {
+        allLetterTyped: string[];    
+    } = useContext(Context);
 
-const index = ({ letterTyped }: Props) => {  
-    if (!letterTyped) return null;
+    if (!allLetterTyped.length) return null;
     
-    console.log('LettersTyped', letterTyped);
+    console.log('LettersTyped', allLetterTyped);
     
     return (
         <div>
             <p>
                 {
-                Array.from(letterTyped).map( (letter: string, index: number) => {
+                Array.from(allLetterTyped).map( (letter: string, index: number) => {
                     return (
                     <span key={index}>
                         {letter}
