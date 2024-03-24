@@ -11,8 +11,7 @@ type Props = {
 
 const index = ({ hiddenWord }: Props) => {
 
-    
-        if ( !hiddenWord.length) return null;
+        console.log('HiddenWord', {hiddenWord})
     
         const { 
             hiddenWord2, 
@@ -21,8 +20,6 @@ const index = ({ hiddenWord }: Props) => {
             setLetterTyped2 
         } = useContext(Context);
 
-        console.log('HiddenWord', {hiddenWord})
-        // const [ hideWord, setHideWord ] = useState<string[]>([]);
 
         
         useEffect(() => {
@@ -33,7 +30,6 @@ const index = ({ hiddenWord }: Props) => {
                 
                 if ( !letters.has(letterEntered) ) {
                      letters.add(letterEntered);
-                    //  setLetterTyped(letterEntered);
                      setLetterTyped2(letterEntered);
                 }
         
@@ -49,22 +45,21 @@ const index = ({ hiddenWord }: Props) => {
 
           useEffect(() => {
 
-            if (letterTyped2) {
+            if (letterTyped2 as string) {
                 const indexs = hiddenWord.map((letra:string, index:number) => {
                     if (letra === letterTyped2) return index;
                     return -1;
                 }).filter((index) => index !== -1);
-    
-                console.log('indexs', indexs);
+                    
                 if (indexs) {
-                    const cloneHideWord = hiddenWord2! as string[];
+                    const cloneHiddenWord = hiddenWord2! as string[];
                     indexs.forEach((index: number) => {
                         if (index !== -1)
-                            cloneHideWord[index] = letterTyped2;
+                            cloneHiddenWord[index] = letterTyped2.toUpperCase();
                         
                     });
     
-                    setHiddenWord2(cloneHideWord);
+                    setHiddenWord2(cloneHiddenWord);
                 }
             
             }
@@ -78,45 +73,6 @@ const index = ({ hiddenWord }: Props) => {
                 )
             
         },[hiddenWord]);
-
-        // useEffect(() => {
-
-        //     if (letterTyped) {
-        //         const indexs = realWord.split('').map((letra, index) => {
-        //             if (letra === letterTyped) return index;
-        //         }).filter((index) => index !== undefined);
-    
-        //         if (indexs) {
-        //             const cloneHideWord = hideWord! as string[];
-        //             indexs.forEach((index: number | undefined) => {
-        //                 if (index !== undefined)
-        //                     cloneHideWord[index] = letterTyped;
-                        
-        //             });
-    
-        //             setHideWord(cloneHideWord);
-        //         }
-        //     }
-            
-        // },[letterTyped])
-
-
-        // useEffect(() => {
-        //     if (letterTyped) {
-        //         const indexs = realWord.split('').map((letra, index) => {
-        //             if (letra === letterTyped) return index;
-        //             return undefined; // Debes devolver algo en todos los casos
-        //         }).filter((index) => index !== undefined) as number[];
-        
-        //         if (indexs.length > 0) {
-        //             const updatedHideWord = hideWord as string[]; // Clonar el estado anterior
-        //             indexs.forEach((index: number) => {
-        //                 updatedHideWord[index] = letterTyped;
-        //             });
-        //             setHideWord(updatedHideWord);
-        //         }
-        //     }
-        // }, [letterTyped, realWord, hideWord]);
 
         return (
             <div>

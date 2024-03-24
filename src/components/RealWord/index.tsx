@@ -9,13 +9,11 @@ const index = ({ word }: Props) => {
         return (
             <div>
                 <p>
-                    <small>{word}</small>
+                    <small>{word.toUpperCase()}</small>
                 </p>
             </div>
         );
 }
-
-// const RealWord = React.memo(index);
 const RealWord = React.memo(index);
 
 export default RealWord

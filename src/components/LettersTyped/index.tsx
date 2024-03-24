@@ -19,7 +19,7 @@ const index = () => {
                 Array.from(allLetterTyped).map( (letter: string, index: number) => {
                     return (
                     <span key={index}>
-                        {letter}
+                        {letter.toUpperCase()}
                     </span>
                     );
                 })
