@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const ContextProvider = ({ children }: Props) => {
-	const [ hiddenWord2, setHiddenWord2 ] = useState<string|null>(null);
+	const [ hiddenWord2, setHiddenWord2 ] = useState<string[]|null>(null);
 	const [ letterTyped2, setLetterTyped2 ] = useState<string>();
 	const [ allLetterTyped, setAllLetterTyped ] = useState<string[]>([]);
 

@@ -17,7 +17,7 @@ const index = ({ hiddenWord }: Props) => {
             hiddenWord2, 
             setHiddenWord2, 
             letterTyped2,
-            setLetterTyped2 
+            setLetterTyped2
         } = useContext(Context);
         
         useEffect(() => {
@@ -34,11 +34,6 @@ const index = ({ hiddenWord }: Props) => {
             };
             
             window.addEventListener('keyup', eventKeyUp);
-            
-            // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);            
-            // if (hiddenWordRef.current && isMobile)
-            //     hiddenWordRef.current.focus();
-              
         
             return () => {
               window.removeEventListener('keyup', eventKeyUp);
@@ -76,6 +71,8 @@ const index = ({ hiddenWord }: Props) => {
                 )
             
         },[hiddenWord]);
+
+        
 
         return (
             <div>                

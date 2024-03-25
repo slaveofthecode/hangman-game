@@ -1,23 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const index = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && inputRef.current) {
+        if (inputRef.current) 
             inputRef.current.focus();
-        }
-    }, []);
-
-    useLayoutEffect(() => {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, []);
-
+        
+    }, [inputRef]);
 
     return (
         <>
@@ -26,9 +17,19 @@ const index = () => {
                 type="text" 
                 style={{ 
                     position: 'absolute', 
-                    left: '-100px' 
-            }}
-            autoFocus tabIndex={0} />
+                    left: '0', 
+                    top: '0',
+                    width: '100%',
+                    height: '100%',
+                    opacity: '1',
+                    background: '#fff5',
+                    pointerEvents: 'none',
+                    outline: 'none',
+                    zIndex: 100
+                }}
+                autoFocus 
+                tabIndex={0} 
+            />
         </>
     );
 };

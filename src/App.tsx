@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
+import AddWords from './components/AddWords';
 import ForceShowKeyboard from './components/ForceShowKeyboard';
 import HiddenWord from './components/HiddenWord';
 import LettersTyped from './components/LettersTyped';
 import RealWord from './components/RealWord';
+import Tools from './components/Tools';
+import YouAreAWinner from './components/YouAreAWinner';
 import { ContextProvider } from './context';
 import { getRandomWord } from './utils/index';
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 function App() {
-
-  // const hiddenWordRef = useRef<HTMLInputElement>(null);
+  
   const wordRef = useRef(getRandomWord());
-
+  
   const [ hiddenWord, setHiddenWord ] = useState<string[]>([]);
 
   useEffect(() => {
@@ -20,21 +24,18 @@ function App() {
       setHiddenWord(wordRef.current.split(''));
     
   }, [wordRef.current]);
-
-//   useEffect(() => {
-//     if (hiddenWordRef.current) {
-//         hiddenWordRef.current.focus();
-//     }
-// }, [hiddenWordRef.current]); // Focusing after the initial render
   
   return (
     <ContextProvider>
-     <div className='flex flex-col gap-3 justify-center items-center'> 
-        <ForceShowKeyboard />
-        <HiddenWord hiddenWord={hiddenWord} />
-        <RealWord word={wordRef.current} />
-        <LettersTyped />
-     </div>
+        <div className='flex flex-col gap-3 justify-center items-center'> 
+            { isMobile && <ForceShowKeyboard /> }
+            <HiddenWord hiddenWord={hiddenWord} />
+            <RealWord word={wordRef.current} />
+            <LettersTyped />
+            <YouAreAWinner />
+            <Tools />
+            <AddWords />
+        </div>
     </ContextProvider>
   )
 }

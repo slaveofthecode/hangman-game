@@ -14,11 +14,14 @@ const index = () => {
     
     return (
         <div>
-            <p>
+            <p className="text-gray-400 flex gap-1">
                 {
                 Array.from(allLetterTyped).map( (letter: string, index: number) => {
                     return (
-                    <span key={index}>
+                    <span 
+                        key={index}
+                        className="bg-[#0009] px-2 py-1 rounded-md"
+                    >
                         {letter.toUpperCase()}
                     </span>
                     );
