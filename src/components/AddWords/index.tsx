@@ -40,13 +40,14 @@ const AddWords = ({ show, setShow}: Props) => {
             });
             setNewWord(value);
             setData(dataFiltered);
-        });
+        },100);
 
     }
 
-    const handleOnClick = () => {        
+    const handleOnClick = (evt:FormEvent) => {        
+        evt.preventDefault();
+
         console.log('A', newWord);
-        
     }
 
     return (
@@ -66,7 +67,7 @@ const AddWords = ({ show, setShow}: Props) => {
                 </header>
                 
                 <main className="flex flex-col gap-2">
-                    <div className="flex m-2">
+                    <form className="flex m-2" onSubmit={handleOnClick}>
                         <input 
                             type="text" 
                             className="p-2 flex-1 outline-none" 
@@ -78,7 +79,7 @@ const AddWords = ({ show, setShow}: Props) => {
                             onClick={handleOnClick}
                             disabled={!!data.length}
                         >+</button>
-                    </div>
+                    </form>
                     <div>
                         {
                             data.map( (word, index) => {

@@ -58,7 +58,7 @@ function App() {
 
   return (
     <ContextProvider>
-        <div className='flex flex-col gap-3 justify-center items-center'> 
+        <div className='flex flex-col gap-3 justify-center items-center m-auto w-full'> 
             { isMobile && <ForceShowKeyboard /> }
             <HiddenWord hiddenWord={hiddenWord} letterTyped={letterTyped} />
             <RealWord word={wordRef.current} />
