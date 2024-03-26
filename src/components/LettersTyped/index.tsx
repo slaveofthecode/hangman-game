@@ -13,8 +13,8 @@ const index = () => {
     console.log('LettersTyped', allLetterTyped);
     
     return (
-        <div>
-            <p className="text-gray-400 flex gap-1">
+        <div className="max-w-[65%]">
+            <p className="text-gray-400 flex gap-1 flex-wrap">
                 {
                 Array.from(allLetterTyped).map( (letter: string, index: number) => {
                     return (

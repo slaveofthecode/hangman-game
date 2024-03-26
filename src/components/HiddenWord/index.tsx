@@ -3,49 +3,51 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../../context';
 
-const letters = new Set<string>();
+// const letters = new Set<string>();
 
 type Props = {
     hiddenWord: string[];
+    letterTyped: string | undefined;
 }
 
-const index = ({ hiddenWord }: Props) => {
+const index = ({ hiddenWord, letterTyped }: Props) => {
 
-        console.log('HiddenWord', {hiddenWord})
+        console.log('HiddenWord', { hiddenWord, letterTyped })
         
         const { 
             hiddenWord2, 
             setHiddenWord2, 
-            letterTyped2,
+            // letterTyped2,
             setLetterTyped2
         } = useContext(Context);
         
-        useEffect(() => {
+        // useEffect(() => {
             
-            const eventKeyUp = (evt: KeyboardEvent) => {
+        //     const eventKeyUp = (evt: KeyboardEvent) => {
                 
-                const letterEntered = evt.key;
+        //         const letterEntered = evt.key;
                 
-                if ( !letters.has(letterEntered) ) {
-                    letters.add(letterEntered);
-                    setLetterTyped2(letterEntered);
-                }
+        //         if ( !letters.has(letterEntered) ) {
+        //             letters.add(letterEntered);
+        //             setLetterTyped2(letterEntered);
+        //         }
                 
-            };
+        //     };
             
-            window.addEventListener('keyup', eventKeyUp);
+        //     window.addEventListener('keyup', eventKeyUp);
         
-            return () => {
-              window.removeEventListener('keyup', eventKeyUp);
-            }
+        //     return () => {
+        //       window.removeEventListener('keyup', eventKeyUp);
+        //     }
         
-          }, []);
+        // }, []);
 
           useEffect(() => {
 
-            if (letterTyped2 as string) {
+            if (letterTyped) {
+                setLetterTyped2(letterTyped);
                 const indexs = hiddenWord.map((letra:string, index:number) => {
-                    if (letra === letterTyped2) return index;
+                    if (letra === letterTyped) return index;
                     return -1;
                 }).filter((index) => index !== -1);
                     
@@ -53,7 +55,7 @@ const index = ({ hiddenWord }: Props) => {
                     const cloneHiddenWord = hiddenWord2! as string[];
                     indexs.forEach((index: number) => {
                         if (index !== -1)
-                            cloneHiddenWord[index] = letterTyped2.toUpperCase();
+                            cloneHiddenWord[index] = letterTyped.toUpperCase();
                         
                     });
     
@@ -62,7 +64,7 @@ const index = ({ hiddenWord }: Props) => {
             
             }
     
-        }, [letterTyped2])
+        }, [letterTyped])
 
         useEffect(()=>{
             if ( hiddenWord.length > 0 )

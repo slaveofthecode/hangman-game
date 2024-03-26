@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../../context";
 
 const index = () => {
+
+    console.log('you are a winner was rendered');
 
     const { hiddenWord2 } : {
         hiddenWord2: string[]
@@ -19,4 +21,7 @@ const index = () => {
     )
 }
 
-export default index
+const YouAreAWinner = React.memo(index);
+export default YouAreAWinner
+// export default index;
+
