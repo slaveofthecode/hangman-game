@@ -46,6 +46,7 @@ const AddWords = ({ show, setShow}: Props) => {
 
     const handleOnClick = () => {        
         console.log('A', newWord);
+        
     }
 
     return (
