@@ -1,19 +1,18 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
 const DEFAULT_TIME = 500;
 
 const useDebounce = () => {
-	const debounceRef = useRef<number>();
+    const debounceRef = useRef<number>();
+    const debounce = (cb: () => void, time = DEFAULT_TIME) => {
+        debounceRef.current && clearTimeout(debounceRef.current);
 
-	const debounce = (cb: () => void, time = DEFAULT_TIME) => {
-		debounceRef.current && clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            cb();
+        }, time);
+    };
 
-		debounceRef.current = setTimeout(() => {
-			cb();
-		}, time);
-	};
-
-	return { debounce };
+    return { debounce };
 };
 
 export default useDebounce;

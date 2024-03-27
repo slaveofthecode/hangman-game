@@ -12,63 +12,56 @@ import { ContextProvider } from './context';
 import { getRandomWord } from './utils/index';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
 const letters = new Set<string>();
 
 function App() {
-  
-  const wordRef = useRef(getRandomWord());
-  const eventWindowKeyUp = useRef<(evt:KeyboardEvent)=>void>();
-  
-  const [ hiddenWord, setHiddenWord ] = useState<string[]>([]);
-  const [ showModal, setShowModal ] = useState<boolean>(false);
-  const [ letterTyped, setLetterTyped ] = useState<string>();
+    const wordRef = useRef(getRandomWord());
+    const eventWindowKeyUp = useRef<(evt: KeyboardEvent) => void>();
+    const [hiddenWord, setHiddenWord] = useState<string[]>([]);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [letterTyped, setLetterTyped] = useState<string>();
 
-  useEffect(() => {
-    if ( wordRef.current.length > 0 )
-      setHiddenWord(wordRef.current.split(''));
-    
-  }, [wordRef.current]);
+    useEffect(() => {
+        if (wordRef.current.length > 0)
+            setHiddenWord(wordRef.current.split(''));
+    }, [wordRef.current]);
 
-  useEffect( () => {
+    useEffect(() => {
+        eventWindowKeyUp.current = (evt: KeyboardEvent) => {
+            console.log('Key pressed:', evt.key);
+            const letterEntered = evt.key;
 
-    eventWindowKeyUp.current = (evt: KeyboardEvent) => {
-      console.log('Key pressed:', evt.key);
-      const letterEntered = evt.key;
-        
-        if ( !letters.has(letterEntered) ) {
-            letters.add(letterEntered);
-            // setLetterTyped2(letterEntered);
-            setLetterTyped(letterEntered);
-        }
-    }
+            if (!letters.has(letterEntered)) {
+                letters.add(letterEntered);
+                // setLetterTyped2(letterEntered);
+                setLetterTyped(letterEntered);
+            }
+        };
 
-    console.log('showModal', showModal);
-    if (showModal === false) 
-      window.addEventListener('keyup', eventWindowKeyUp.current);
-    
+        console.log('showModal', showModal);
+        if (showModal === false)
+            window.addEventListener('keyup', eventWindowKeyUp.current);
 
-    return () => {
-      if (!showModal && eventWindowKeyUp.current) {
-        window.removeEventListener('keyup', eventWindowKeyUp.current);
-      }
-    };
+        return () => {
+            if (!showModal && eventWindowKeyUp.current) {
+                window.removeEventListener('keyup', eventWindowKeyUp.current);
+            }
+        };
+    }, [showModal]);
 
-  },[showModal])  
-
-  return (
-    <ContextProvider>
-        <div className='flex flex-col gap-3 justify-center items-center m-auto w-full'> 
-            { isMobile && <ForceShowKeyboard /> }
-            <HiddenWord hiddenWord={hiddenWord} letterTyped={letterTyped} />
-            <RealWord word={wordRef.current} />
-            <LettersTyped />
-            <YouAreAWinner />
-            <Tools setShow={setShowModal} />
-            <AddWords show={showModal} setShow={setShowModal} />
-        </div>
-    </ContextProvider>
-  )
+    return (
+        <ContextProvider>
+            <div className="flex flex-col gap-3 justify-center items-center m-auto w-full">
+                {isMobile && <ForceShowKeyboard />}
+                <HiddenWord hiddenWord={hiddenWord} letterTyped={letterTyped} />
+                <RealWord word={wordRef.current} />
+                <LettersTyped />
+                <YouAreAWinner />
+                <Tools setShow={setShowModal} />
+                <AddWords show={showModal} setShow={setShowModal} />
+            </div>
+        </ContextProvider>
+    );
 }
 
-export default App
+export default App;

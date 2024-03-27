@@ -1,14 +1,14 @@
-import { WORDS } from "../data";
+import { WORDS } from '../data';
 
 const getRandomInt = (max: number) => {
-	return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max);
 };
 
 const getWord = (index: number) => {
-	return WORDS[index];
+    return WORDS[index];
 };
 
 export const getRandomWord = () => {
-	const index = getRandomInt(WORDS.length);
-	return getWord(index);
+    const index = getRandomInt(WORDS.length);
+    return getWord(index);
 };

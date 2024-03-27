@@ -5,19 +5,17 @@ const index = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (inputRef.current) 
-            inputRef.current.focus();
-        
+        if (inputRef.current) inputRef.current.focus();
     }, [inputRef]);
 
     return (
         <>
-            <input 
-                ref={inputRef} 
-                type="text" 
-                style={{ 
-                    position: 'absolute', 
-                    left: '0', 
+            <input
+                ref={inputRef}
+                type="text"
+                style={{
+                    position: 'absolute',
+                    left: '0',
                     top: '0',
                     width: '100%',
                     height: '100%',
@@ -25,10 +23,10 @@ const index = () => {
                     background: '#fff5',
                     pointerEvents: 'none',
                     outline: 'none',
-                    zIndex: 100
+                    zIndex: 100,
                 }}
-                autoFocus 
-                tabIndex={0} 
+                autoFocus
+                tabIndex={0}
             />
         </>
     );
