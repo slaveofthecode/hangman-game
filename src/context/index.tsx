@@ -1,42 +1,31 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
+import { getRandomWord } from '../utils';
 
-export const Context = createContext<{
-    hiddenWord2: string[] | null;
-    setHiddenWord2: React.Dispatch<React.SetStateAction<string[] | null>>;
-    letterTyped2: string | undefined;
-    setLetterTyped2: React.Dispatch<React.SetStateAction<string | undefined>>;
-    allLetterTyped: string[];
-    setAllLetterTyped: React.Dispatch<React.SetStateAction<string[]>>;
-} | null>(null);
+export const Context = createContext<ContextType | null>(null);
 
 type Props = {
     children: React.ReactNode;
 };
+const HIDDEN_WORD = getRandomWord();
 
 export const ContextProvider = ({ children }: Props) => {
-    const [hiddenWord2, setHiddenWord2] = useState<string[] | null>(null);
-    const [letterTyped2, setLetterTyped2] = useState<string>();
-    const [allLetterTyped, setAllLetterTyped] = useState<string[]>([]);
-
-    console.log('ContextProvider', {
-        hiddenWord2,
-        letterTyped2,
-        allLetterTyped,
+    const [inputLetters, setInputLetters] = useState<{
+        great: string[];
+        wrong: string[];
+    }>({
+        great: [],
+        wrong: [],
     });
+    const [hiddenWord] = useState<string>(HIDDEN_WORD);
 
-    useEffect(() => {
-        if (letterTyped2) setAllLetterTyped((prev) => [...prev, letterTyped2]);
-    }, [letterTyped2]);
+    console.log('ContextProvider', { hiddenWord, HIDDEN_WORD });
 
     return (
         <Context.Provider
             value={{
-                hiddenWord2,
-                setHiddenWord2,
-                letterTyped2,
-                setLetterTyped2,
-                allLetterTyped,
-                setAllLetterTyped,
+                inputLetters,
+                setInputLetters,
+                hiddenWord,
             }}
         >
             {children}

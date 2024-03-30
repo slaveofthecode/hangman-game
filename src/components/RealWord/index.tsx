@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../../context';
 
-type Props = {
-    word: string;
-};
+const RealWord = () => {
+    const { hiddenWord } = useContext(Context) as ContextType;
 
-const index = ({ word }: Props) => {
-    console.log('RealWord', word);
+    console.log('RealWord', hiddenWord!);
     return (
         <div>
             <p>
-                <small>{word.toUpperCase()}</small>
+                <small>{hiddenWord?.toUpperCase()}</small>
             </p>
         </div>
     );
 };
-const RealWord = React.memo(index);
+const MemoRealWord = React.memo(RealWord);
 
-export default RealWord;
+export default MemoRealWord;

@@ -1,76 +1,67 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../../context';
 
-// const letters = new Set<string>();
-
 type Props = {
-    hiddenWord: string[];
     letterTyped: string | undefined;
 };
 
-const index = ({ hiddenWord, letterTyped }: Props) => {
-    console.log('HiddenWord', { hiddenWord, letterTyped });
+const HiddenWord = ({ letterTyped }: Props) => {
+    console.log('HiddenWord Component', { letterTyped });
 
-    const {
-        hiddenWord2,
-        setHiddenWord2,
-        // letterTyped2,
-        setLetterTyped2,
-    } = useContext(Context);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { hiddenWord, setInputLetters } = useContext<any>(Context);
+    const [currentHiddenWord, setCurrentHiddenWord] = useState<string[]>([]);
 
-    // useEffect(() => {
-
-    //     const eventKeyUp = (evt: KeyboardEvent) => {
-
-    //         const letterEntered = evt.key;
-
-    //         if ( !letters.has(letterEntered) ) {
-    //             letters.add(letterEntered);
-    //             setLetterTyped2(letterEntered);
-    //         }
-
-    //     };
-
-    //     window.addEventListener('keyup', eventKeyUp);
-
-    //     return () => {
-    //       window.removeEventListener('keyup', eventKeyUp);
-    //     }
-
-    // }, []);
+    useEffect(() => {
+        if (hiddenWord)
+            setCurrentHiddenWord(hiddenWord.split('').map(() => ''));
+    }, []);
 
     useEffect(() => {
         if (letterTyped) {
-            setLetterTyped2(letterTyped);
+            letterTyped = letterTyped.toLowerCase();
+            if (hiddenWord?.toString().split('').includes(letterTyped)) {
+                setInputLetters(
+                    (prev: { great: string[]; wrong: string[] }) => ({
+                        ...prev,
+                        great: [...prev.great, letterTyped],
+                    }),
+                );
+            } else {
+                setInputLetters(
+                    (prev: { great: string[]; wrong: string[] }) => ({
+                        ...prev,
+                        wrong: [...prev.wrong, letterTyped],
+                    }),
+                );
+            }
+
             const indexs = hiddenWord
+                ?.toString()
+                .split('')
                 .map((letra: string, index: number) => {
                     if (letra === letterTyped) return index;
                     return -1;
                 })
-                .filter((index) => index !== -1);
+                .filter((index: number) => index !== -1);
 
             if (indexs) {
-                const cloneHiddenWord = hiddenWord2! as string[];
+                const cloneCurrentHiddenWord = [...currentHiddenWord];
                 indexs.forEach((index: number) => {
                     if (index !== -1)
-                        cloneHiddenWord[index] = letterTyped.toUpperCase();
+                        cloneCurrentHiddenWord[index] =
+                            letterTyped!.toUpperCase();
                 });
 
-                setHiddenWord2(cloneHiddenWord);
+                setCurrentHiddenWord(cloneCurrentHiddenWord);
             }
         }
     }, [letterTyped]);
 
-    useEffect(() => {
-        if (hiddenWord.length > 0)
-            setHiddenWord2(new Array(hiddenWord.length).fill(''));
-    }, [hiddenWord]);
-
     return (
         <div>
-            {hiddenWord2?.map((letter: string, index: number) => {
+            {currentHiddenWord?.map((letter: string, index: number) => {
                 return (
                     <span
                         key={`${letter}-${index}`}
@@ -85,5 +76,6 @@ const index = ({ hiddenWord, letterTyped }: Props) => {
     );
 };
 
-const HiddenWord = React.memo(index);
-export default HiddenWord;
+const MemoHiddenWord = React.memo(HiddenWord);
+
+export default MemoHiddenWord;

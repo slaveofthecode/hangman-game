@@ -9,7 +9,7 @@ type Props = {
     setShow: (show: boolean) => void;
 };
 
-const AddWords = ({ show, setShow }: Props) => {
+const ModalAddWords = ({ show, setShow }: Props) => {
     if (!show) return null;
 
     const [data, setData] = useState<string[]>([]);
@@ -94,4 +94,4 @@ const AddWords = ({ show, setShow }: Props) => {
     );
 };
 
-export default AddWords;
+export default ModalAddWords;
