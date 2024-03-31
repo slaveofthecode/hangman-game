@@ -2,7 +2,7 @@ type Props = {
     setShow: (show: boolean) => void;
 };
 
-const index = ({ setShow }: Props) => {
+const Tools = ({ setShow }: Props) => {
     return (
         <div className="absolute bottom-0 left-0 w-screen p-2">
             <nav className="flex justify-end px-3">
@@ -17,4 +17,4 @@ const index = ({ setShow }: Props) => {
     );
 };
 
-export default index;
+export default Tools;

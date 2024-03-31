@@ -16,7 +16,7 @@ const HiddenWord = ({ letterTyped }: Props) => {
     useEffect(() => {
         if (hiddenWord)
             setCurrentHiddenWord(hiddenWord.split('').map(() => ''));
-    }, []);
+    }, [hiddenWord]);
 
     useEffect(() => {
         if (letterTyped) {

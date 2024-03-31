@@ -5,7 +5,7 @@ import ModalAddWords from './components/ModalAddWords';
 import ForceShowKeyboard from './components/ForceShowKeyboard';
 import HiddenWord from './components/HiddenWord';
 import LettersTyped from './components/LettersTyped';
-import RealWord from './components/RealWord';
+// import RealWord from './components/RealWord';
 import Tools from './components/Tools';
 import Message from './components/Message';
 import { ContextProvider } from './context';
@@ -56,7 +56,7 @@ function App() {
                 <Message setGameIsOver={setGameIsOver} />
             </div>
             <Tools setShow={setShowModal} />
-            <ModalAddWords show={showModal} setShow={setShowModal} />
+            {showModal && <ModalAddWords setShow={setShowModal} />}
         </ContextProvider>
     );
 }

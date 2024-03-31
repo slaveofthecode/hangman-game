@@ -1,27 +1,30 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-
-import { FormEvent, useEffect, useState } from 'react';
-import { WORDS } from '../../data';
+import { FormEvent, useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { addNewWord } from '../../store/features/playSlice';
 
 type Props = {
-    show: boolean;
     setShow: (show: boolean) => void;
 };
 
-const ModalAddWords = ({ show, setShow }: Props) => {
-    if (!show) return null;
+const ModalAddWords = ({ setShow }: Props) => {
+    const { words } = useSelector((store: RootState) => store.play);
+    const dispatch = useDispatch();
+
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [data, setData] = useState<string[]>([]);
-    const [newWord, setNewWord] = useState<string>();
+    const [newWord, setNewWord] = useState<string>('');
 
     useEffect(() => {
-        setData(WORDS);
+        setData(words);
     }, []);
 
     const closeModal = (evt: FormEvent) => {
         evt.preventDefault();
-        evt.stopPropagation();
+        // evt.stopPropagation();
 
         setShow(false);
         // if (evt.key === 'Escape') setShow(false); // evt: KeyboardEvent
@@ -32,9 +35,10 @@ const ModalAddWords = ({ show, setShow }: Props) => {
         debounce(() => {
             const { value } = evt.target as HTMLInputElement;
 
-            const dataFiltered = [...WORDS].filter((d) => {
+            const dataFiltered = [...words].filter((d) => {
                 if (d.includes(value)) return d;
             });
+
             setNewWord(value);
             setData(dataFiltered);
         }, 100);
@@ -42,8 +46,16 @@ const ModalAddWords = ({ show, setShow }: Props) => {
 
     const handleOnClick = (evt: FormEvent) => {
         evt.preventDefault();
+        console.log('newWord:', newWord);
+        dispatch(addNewWord(newWord));
+        setData([...words, newWord]);
 
-        console.log('A', newWord);
+        setNewWord('');
+
+        if (inputRef.current) {
+            inputRef.current.focus();
+            inputRef.current.value = '';
+        }
     };
 
     return (
@@ -62,6 +74,7 @@ const ModalAddWords = ({ show, setShow }: Props) => {
                 <main className="flex flex-col gap-2">
                     <form className="flex m-2" onSubmit={handleOnClick}>
                         <input
+                            ref={inputRef}
                             type="text"
                             className="p-2 flex-1 outline-none"
                             placeholder="Type a word to add..."
@@ -70,13 +83,14 @@ const ModalAddWords = ({ show, setShow }: Props) => {
                         <button
                             className="px-5 bg-[#fff1]"
                             onClick={handleOnClick}
-                            disabled={!!data.length}
+                            // disabled={!!data?.length}
+                            disabled={newWord.length === 0}
                         >
                             +
                         </button>
                     </form>
                     <div>
-                        {data.map((word, index) => {
+                        {data?.map((word, index) => {
                             return <p key={index}>{word}</p>;
                         })}
                     </div>
@@ -85,7 +99,7 @@ const ModalAddWords = ({ show, setShow }: Props) => {
                 <footer className="absolute bottom-0 left-0 w-full h10 bg-[#fff1] p-2">
                     <div className="flex justify-end opacity-75">
                         <small>
-                            ( <strong>{data.length}</strong> )
+                            ( <strong>{words?.length}</strong> )
                         </small>
                     </div>
                 </footer>

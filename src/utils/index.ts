@@ -1,14 +1,21 @@
-import { WORDS } from '../data';
+// import { WORDS } from '../data';
 
-const getRandomInt = (max: number) => {
+export const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
 };
 
-const getWord = (index: number) => {
-    return WORDS[index];
-};
+// const getWord = (index: number) => {
+//     const { words } = useSelector((state: RootState) => state.play);
+//     // return WORDS[index];
+//     return words[index];
+// };
 
-export const getRandomWord = () => {
-    const index = getRandomInt(WORDS.length);
-    return getWord(index);
-};
+// const getWordsLength = () => {
+//     const { words } = useSelector((state: RootState) => state.play);
+//     return words.length;
+// };
+
+// export const getRandomWord = () => {
+//     const index = getRandomInt(getWordsLength());
+//     return getWord(index);
+// };
