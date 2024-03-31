@@ -33,7 +33,7 @@ const Message = ({ setGameIsOver }: Props) => {
     if (hiddenWordArray && allLettersAreInTheWord(hiddenWord!, great)) {
         setGameIsOver(true);
         return (
-            <div>
+            <div className="mt-6">
                 <p>You are a winner!! 👏🏻👏🏻👏🏻</p>
                 <small>
                     <button onClick={handleClickTryAgain}>Play again!</button>
