@@ -12,4 +12,5 @@ type ContextType = {
         }>
     >;
     hiddenWord: string | undefined;
+    setHiddenWord: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
