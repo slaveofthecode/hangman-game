@@ -27,7 +27,7 @@ function App() {
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [letterTyped, setLetterTyped] = useState<string>();
-    const [gameIsOver, setGameIsOver] = useState<boolean>(false);
+    // const [gameIsOver, setGameIsOver] = useState<boolean>(false);
 
     useEffect(() => {
         if (playStore.data.words === null && playStore.error === null) {
@@ -65,10 +65,10 @@ function App() {
     }, [showModal]);
 
     useEffect(() => {
-        if (gameIsOver && eventWindowKeyUp.current) {
+        if (playStore.data.gameIsOver && eventWindowKeyUp.current) {
             window.removeEventListener('keyup', eventWindowKeyUp.current);
         }
-    }, [gameIsOver]);
+    }, [playStore.data.gameIsOver]);
 
     return (
         <>
@@ -76,10 +76,30 @@ function App() {
                 {isMobile && <ForceShowKeyboard />}
                 <HiddenWord letterTyped={letterTyped} />
                 <LettersTyped />
-                {/* <RealWord /> */}
-                <Message setGameIsOver={setGameIsOver} />
+                {playStore.data.gameIsOver && <Message />}
             </div>
-            <Tools setShow={setShowModal} />
+            <Tools>
+                <>
+                    <div>
+                        {playStore.error && (
+                            <p className="text-red-500 text-sm">
+                                There was an error to get words from API Server,
+                                so we are using a default list of words.
+                            </p>
+                        )}
+                    </div>
+                    <div>
+                        {!playStore.error && (
+                            <a
+                                className="text-gray-500 text-sm transition duration-500 ease-in-out hover:text-gray-100"
+                                onClick={() => setShowModal(true)}
+                            >
+                                add words
+                            </a>
+                        )}
+                    </div>
+                </>
+            </Tools>
             {showModal && <ModalAddWords setShow={setShowModal} />}
         </>
     );

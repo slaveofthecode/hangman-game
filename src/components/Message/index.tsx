@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { FormEvent, useContext } from 'react';
 import { Context } from '../../context';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { allLettersAreInTheWord } from '../../utils';
 
-const MAXIMUM_ATTEMPTS = 6;
-
-type Props = {
-    setGameIsOver: (gameIsOver: boolean) => void;
-};
-
-const Message = ({ setGameIsOver }: Props) => {
+const Message = () => {
+    const playStore = useSelector((state: RootState) => state.play);
     const {
         hiddenWord,
         inputLetters: { great, wrong },
@@ -23,15 +21,14 @@ const Message = ({ setGameIsOver }: Props) => {
         window.location.reload();
     };
 
-    console.log('Message', {
-        hiddenWord,
-        hiddenWordArray,
-        great,
-        wrong,
-    });
+    // console.log('Message', {
+    //     hiddenWord,
+    //     hiddenWordArray,
+    //     great,
+    //     wrong,
+    // });
 
     if (hiddenWordArray && allLettersAreInTheWord(hiddenWord!, great)) {
-        setGameIsOver(true);
         return (
             <div className="mt-6">
                 <p>You are a winner!! 👏🏻👏🏻👏🏻</p>
@@ -40,8 +37,7 @@ const Message = ({ setGameIsOver }: Props) => {
                 </small>
             </div>
         );
-    } else if (wrong.length >= MAXIMUM_ATTEMPTS) {
-        setGameIsOver(true);
+    } else if (wrong.length >= playStore.data.maximumAttempts) {
         return (
             <div>
                 <p>You are a loser 😢😢😢</p>
@@ -59,12 +55,3 @@ const Message = ({ setGameIsOver }: Props) => {
 const MemoMessage = React.memo(Message);
 
 export default MemoMessage;
-
-function allLettersAreInTheWord(
-    hiddenWord: string,
-    inputLetters: string[],
-): boolean {
-    return hiddenWord
-        .split('')
-        .every((letter) => inputLetters.includes(letter));
-}

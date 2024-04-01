@@ -1,12 +1,29 @@
 import React, { useContext } from 'react';
 import { Context } from '../../context';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { allLettersAreInTheWord } from '../../utils';
+import { setGameIsOver } from '../../store/features/playSlice';
+import { RootState } from '../../store';
 
 const LettersTyped = () => {
-    const { inputLetters } = useContext(Context) as ContextType;
+    const playStore = useSelector((state: RootState) => state.play);
+    const dispatch = useDispatch();
+
+    const { inputLetters, hiddenWord } = useContext(Context) as ContextType;
 
     if (!inputLetters.wrong.length) return null;
 
-    console.log('LettersTyped', inputLetters.wrong.join(''));
+    if (
+        hiddenWord?.split('') &&
+        allLettersAreInTheWord(hiddenWord!, inputLetters.great)
+    ) {
+        dispatch(setGameIsOver(true));
+    } else if (inputLetters.wrong.length >= playStore.data.maximumAttempts) {
+        dispatch(setGameIsOver(true));
+    }
+
+    // console.log('LettersTyped', inputLetters.wrong.join(''));
 
     return (
         <div className="max-w-[65%] mb-2 mt-6">

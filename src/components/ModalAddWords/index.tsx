@@ -3,15 +3,15 @@ import { FormEvent, useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { addNewWord } from '../../store/features/playSlice';
+import { postWords } from '../../store/features/playSlice';
 
 type Props = {
     setShow: (show: boolean) => void;
 };
 
 const ModalAddWords = ({ setShow }: Props) => {
-    const { words } = useSelector((store: RootState) => store.play);
     const dispatch = useDispatch();
+    const { words } = useSelector((store: RootState) => store.play.data);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -19,7 +19,7 @@ const ModalAddWords = ({ setShow }: Props) => {
     const [newWord, setNewWord] = useState<string>('');
 
     useEffect(() => {
-        setData(words);
+        words && setData(words);
     }, []);
 
     const closeModal = (evt: FormEvent) => {
@@ -35,7 +35,7 @@ const ModalAddWords = ({ setShow }: Props) => {
         debounce(() => {
             const { value } = evt.target as HTMLInputElement;
 
-            const dataFiltered = [...words].filter((d) => {
+            const dataFiltered = [...words!].filter((d) => {
                 if (d.includes(value)) return d;
             });
 
@@ -46,9 +46,11 @@ const ModalAddWords = ({ setShow }: Props) => {
 
     const handleOnClick = (evt: FormEvent) => {
         evt.preventDefault();
-        console.log('newWord:', newWord);
-        dispatch(addNewWord(newWord));
-        setData([...words, newWord]);
+
+        // dispatch(addNewWord(newWord));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        dispatch(postWords(newWord) as any);
+        setData([...words!, newWord]);
 
         setNewWord('');
 

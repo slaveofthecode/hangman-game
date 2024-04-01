@@ -19,3 +19,12 @@ export const getRandomInt = (max: number) => {
 //     const index = getRandomInt(getWordsLength());
 //     return getWord(index);
 // };
+
+export const allLettersAreInTheWord = (
+    hiddenWord: string,
+    inputLetters: string[],
+): boolean => {
+    return hiddenWord
+        .split('')
+        .every((letter) => inputLetters.includes(letter));
+};

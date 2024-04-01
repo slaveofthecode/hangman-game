@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import { WORDS } from '../../data';
+import { WORDS } from '../../data';
 
 interface CommonState {
     error: string | null;
@@ -11,6 +11,7 @@ interface PlayState extends CommonState {
     data: {
         words: string[] | null;
         maximumAttempts: number;
+        gameIsOver: boolean;
     };
 }
 
@@ -20,28 +21,40 @@ const initialState: PlayState = {
     data: {
         words: null,
         maximumAttempts: 6,
+        gameIsOver: false,
     },
 };
 
 export const getWords = createAsyncThunk('words/get', async () => {
-    try {
-        const response = await fetch('http://localhost:3000/words');
+    const response = await fetch('http://localhost:3000/words');
+    const data = await response.json();
+    return data;
+});
+
+export const postWords = createAsyncThunk(
+    'words/post',
+    async (word: string) => {
+        const response = await fetch('http://localhost:3000/words', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ word }),
+        });
         const data = await response.json();
         return data;
-    } catch (error) {
-        console.error(error);
-        return Promise.resolve({
-            error,
-        });
-    }
-});
+    },
+);
 
 const playSlice = createSlice({
     name: 'play',
     initialState,
     reducers: {
-        addNewWord: (state, action) => {
-            state.data.words = [...(state.data.words ?? []), action.payload];
+        // addNewWord: (state, action) => {
+        //     state.data.words = [...(state.data.words ?? []), action.payload];
+        // },
+        setGameIsOver: (state, action) => {
+            state.data.gameIsOver = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -52,7 +65,6 @@ const playSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getWords.fulfilled, (state, action) => {
-                console.log('[ getWords.fulfilled ]', action.payload);
                 const words = action.payload as { word: string }[];
 
                 state.loading = false;
@@ -61,12 +73,25 @@ const playSlice = createSlice({
             })
             .addCase(getWords.rejected, (state, action) => {
                 state.loading = false;
-                state.data.words = null;
-                state.error = action.payload as string;
+                state.data.words = WORDS;
+                state.error = `Error fetching words : ${action.error.message}`;
+            })
+            .addCase(postWords.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(postWords.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = null;
+                state.data.words = [...state.data.words!, action.payload.word];
+            })
+            .addCase(postWords.rejected, (state, action) => {
+                state.loading = false;
+                state.error = `Error adding word : ${action.error.message}`;
             });
     },
 });
 
-export const { addNewWord } = playSlice.actions;
+export const { setGameIsOver } = playSlice.actions;
 
 export default playSlice.reducer;

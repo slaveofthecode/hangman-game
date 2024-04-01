@@ -1,7 +1,4 @@
 import { createContext, useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import { getRandomInt } from '../utils';
-// import { RootState } from '../store';
 
 export const Context = createContext<ContextType | null>(null);
 
@@ -10,8 +7,6 @@ type Props = {
 };
 
 export const ContextProvider = ({ children }: Props) => {
-    // const { words } = useSelector((state: RootState) => state.play);
-
     const [inputLetters, setInputLetters] = useState<{
         great: string[];
         wrong: string[];
@@ -21,13 +16,7 @@ export const ContextProvider = ({ children }: Props) => {
     });
     const [hiddenWord, setHiddenWord] = useState<string>();
 
-    // useEffect(() => {
-    //     if (words) {
-    //         setHiddenWord(words[getRandomInt(words.length)]);
-    //     }
-    // }, [words]);
-
-    console.log('ContextProvider', { hiddenWord });
+    // console.log('ContextProvider', { hiddenWord });
 
     return (
         <Context.Provider

@@ -7,7 +7,7 @@ type Props = {
 };
 
 const HiddenWord = ({ letterTyped }: Props) => {
-    console.log('HiddenWord Component', { letterTyped });
+    // console.log('HiddenWord Component', { letterTyped });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { hiddenWord, setInputLetters } = useContext<any>(Context);

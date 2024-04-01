@@ -1,18 +1,11 @@
 type Props = {
-    setShow: (show: boolean) => void;
+    children: React.ReactNode;
 };
 
-const Tools = ({ setShow }: Props) => {
+const Tools = ({ children }: Props) => {
     return (
         <div className="absolute bottom-0 left-0 w-screen p-2">
-            <nav className="flex justify-end px-3">
-                <a
-                    className="text-gray-500 text-sm transition duration-500 ease-in-out hover:text-gray-100"
-                    onClick={() => setShow(true)}
-                >
-                    add words
-                </a>
-            </nav>
+            <nav className="flex justify-between px-3">{children}</nav>
         </div>
     );
 };
