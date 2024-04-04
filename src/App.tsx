@@ -10,8 +10,8 @@ import Message from './components/Message';
 import { Context } from './context';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './store';
-import { getWords } from './store/features/playSlice';
 import { getRandomInt } from './utils';
+import { getWords } from './store/features/play/thunk';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const lettersTyped = new Set<string>();

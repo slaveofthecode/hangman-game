@@ -1,16 +1,17 @@
 /// <reference types="vite/client" />
 
+type ContextInputLettersType = {
+    great: string[];
+    wrong: string[];
+};
+
+type ContextHiddenWordType = string | undefined;
+
 type ContextType = {
-    inputLetters: {
-        great: string[];
-        wrong: string[];
-    };
+    inputLetters: ContextInputLettersType;
     setInputLetters: React.Dispatch<
-        React.SetStateAction<{
-            great: string[];
-            wrong: string[];
-        }>
+        React.SetStateAction<ContextInputLettersType>
     >;
-    hiddenWord: string | undefined;
-    setHiddenWord: React.Dispatch<React.SetStateAction<string | undefined>>;
+    hiddenWord: ContextHiddenWordType;
+    setHiddenWord: React.Dispatch<React.SetStateAction<ContextHiddenWordType>>;
 };

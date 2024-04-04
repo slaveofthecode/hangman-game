@@ -3,7 +3,7 @@ import { Context } from '../../context';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { allLettersAreInTheWord } from '../../utils';
-import { setGameIsOver } from '../../store/features/playSlice';
+import { setGameIsOver } from '../../store/features/play/slice';
 import { RootState } from '../../store';
 
 const LettersTyped = () => {

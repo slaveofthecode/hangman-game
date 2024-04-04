@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import playReducer from './features/playSlice';
+import playReducer from './features/play/slice';
 
 const store = configureStore({
     reducer: {

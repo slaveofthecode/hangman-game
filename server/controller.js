@@ -4,7 +4,9 @@ const models = await createSchema();
 
 async function get(req, res) {
     const words = await models.Words.find();
-    res.json(words);
+    const wordsSorted = words.sort((a, b) => a.word.localeCompare(b.word));
+    
+    res.json(wordsSorted);
 }
 
 async function post(req, res) {

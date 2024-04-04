@@ -1,62 +1,24 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { WORDS } from '../../data';
-
-interface CommonState {
-    error: string | null;
-    loading: boolean;
-    data: object;
-}
-
-interface PlayState extends CommonState {
-    data: {
-        words: string[] | null;
-        maximumAttempts: number;
-        gameIsOver: boolean;
-    };
-}
+import { createSlice } from '@reduxjs/toolkit';
+import { WORDS } from '../../../data';
+import { PlayState } from './state';
+import { reducers } from './reducers';
+import { getWords, postWords } from './thunk';
+import { MAXIMUM_ATTEMPTS } from '../../../enums';
 
 const initialState: PlayState = {
     error: null,
     loading: false,
     data: {
         words: null,
-        maximumAttempts: 6,
+        maximumAttempts: MAXIMUM_ATTEMPTS,
         gameIsOver: false,
     },
 };
 
-export const getWords = createAsyncThunk('words/get', async () => {
-    const response = await fetch('http://localhost:3000/words');
-    const data = await response.json();
-    return data;
-});
-
-export const postWords = createAsyncThunk(
-    'words/post',
-    async (word: string) => {
-        const response = await fetch('http://localhost:3000/words', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ word }),
-        });
-        const data = await response.json();
-        return data;
-    },
-);
-
 const playSlice = createSlice({
     name: 'play',
     initialState,
-    reducers: {
-        // addNewWord: (state, action) => {
-        //     state.data.words = [...(state.data.words ?? []), action.payload];
-        // },
-        setGameIsOver: (state, action) => {
-            state.data.gameIsOver = action.payload;
-        },
-    },
+    reducers,
     extraReducers: (builder) => {
         builder
             .addCase(getWords.pending, (state) => {

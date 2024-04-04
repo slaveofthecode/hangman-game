@@ -7,16 +7,11 @@ type Props = {
 };
 
 export const ContextProvider = ({ children }: Props) => {
-    const [inputLetters, setInputLetters] = useState<{
-        great: string[];
-        wrong: string[];
-    }>({
+    const [inputLetters, setInputLetters] = useState<ContextInputLettersType>({
         great: [],
         wrong: [],
     });
-    const [hiddenWord, setHiddenWord] = useState<string>();
-
-    // console.log('ContextProvider', { hiddenWord });
+    const [hiddenWord, setHiddenWord] = useState<ContextHiddenWordType>();
 
     return (
         <Context.Provider

@@ -3,7 +3,7 @@ import { FormEvent, useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { postWords } from '../../store/features/playSlice';
+import { postWords } from '../../store/features/play/thunk';
 
 type Props = {
     setShow: (show: boolean) => void;
@@ -47,12 +47,17 @@ const ModalAddWords = ({ setShow }: Props) => {
     const handleOnClick = (evt: FormEvent) => {
         evt.preventDefault();
 
-        // dispatch(addNewWord(newWord));
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        dispatch(postWords(newWord) as any);
-        setData([...words!, newWord]);
+        if (!words?.includes(newWord)) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            dispatch(postWords(newWord) as any);
 
-        setNewWord('');
+            const wordsSorted = [...words!, newWord]?.sort(
+                (a: string, b: string) => a.localeCompare(b),
+            );
+            setData(wordsSorted);
+
+            setNewWord('');
+        }
 
         if (inputRef.current) {
             inputRef.current.focus();
@@ -62,7 +67,7 @@ const ModalAddWords = ({ setShow }: Props) => {
 
     return (
         <section className="absolute top-0 left-0 w-full h-full flex z-10 bg-[#0008]">
-            <div className="w-11/12 h-4/6 bg-[#000b] m-auto z-20 relative">
+            <div className="w-11/12 h-4/6 bg-[#000b] m-auto z-20 flex flex-col justify-center items-stretch">
                 <header className="p-4 flex justify-between items-center">
                     <span>Add new words</span>
                     <a
@@ -73,7 +78,7 @@ const ModalAddWords = ({ setShow }: Props) => {
                     </a>
                 </header>
 
-                <main className="flex flex-col gap-2">
+                <main className="flex flex-col gap-2 flex-auto overflow-hidden">
                     <form className="flex m-2" onSubmit={handleOnClick}>
                         <input
                             ref={inputRef}
@@ -85,20 +90,26 @@ const ModalAddWords = ({ setShow }: Props) => {
                         <button
                             className="px-5 bg-[#fff1]"
                             onClick={handleOnClick}
-                            // disabled={!!data?.length}
                             disabled={newWord.length === 0}
                         >
                             +
                         </button>
                     </form>
-                    <div>
+                    <div className="flex flex-wrap gap-2 px-2">
                         {data?.map((word, index) => {
-                            return <p key={index}>{word}</p>;
+                            return (
+                                <p
+                                    key={index}
+                                    className="bg-slate-800 p-2 rounded-md"
+                                >
+                                    {word}
+                                </p>
+                            );
                         })}
                     </div>
                 </main>
 
-                <footer className="absolute bottom-0 left-0 w-full h10 bg-[#fff1] p-2">
+                <footer className="bottom-0 left-0 w-full h10 bg-[#fff1] p-2">
                     <div className="flex justify-end opacity-75">
                         <small>
                             ( <strong>{words?.length}</strong> )
