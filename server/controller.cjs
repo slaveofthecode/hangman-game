@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { createSchema } = require('./db.cjs');
 
-const models = await createSchema();
 
 async function get(req, res) {
+    const models = await createSchema();
     const words = await models.Words.find();
     const wordsSorted = words.sort((a, b) => a.word.localeCompare(b.word));
     
@@ -12,6 +12,7 @@ async function get(req, res) {
 }
 
 async function post(req, res) {
+    const models = await createSchema();
 
     try {
         const word = new models.Words({
