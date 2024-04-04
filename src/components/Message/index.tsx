@@ -58,7 +58,10 @@ function ButtonAgain() {
     };
 
     return (
-        <button onClick={onClick} className="w-10 h-11 fill-slate-400 mt-4">
+        <button
+            onClick={onClick}
+            className="w-10 h-11 fill-slate-400 mt-4 text-slate-400"
+        >
             <AgainIcon />
         </button>
     );
