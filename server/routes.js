@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const controller = require('./controller.cjs');
+const controller = require('./controller.js');
 
 const router = express.Router();
 
