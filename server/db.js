@@ -48,11 +48,6 @@ const createSchema = async () => {
     }
 }
 
-
-// export {
-//     connectToDB,
-//     createSchema
-// }
 module.exports = {
     connectToDB,
     createSchema

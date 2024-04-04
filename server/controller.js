@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { createSchema } = require('./db.cjs');
+const { createSchema } = require('./db.js');
 
 
 async function get(req, res) {
@@ -39,5 +39,4 @@ const controller = {
     post
 }
 
-// export default controller;
 module.exports = controller;

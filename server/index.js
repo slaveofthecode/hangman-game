@@ -1,13 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
-// import express from 'express';
-// import router from './routes.cjs';
-// import { connectToDB } from './db.cjs';
-// import dotenv from 'dotenv';
-// import cors from 'cors'
+/* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const router = require('./routes.cjs');
-const { connectToDB } = require('./db.cjs');
+const router = require('./routes.js');
+const { connectToDB } = require('./db.js');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
