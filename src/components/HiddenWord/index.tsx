@@ -60,7 +60,7 @@ const HiddenWord = ({ letterTyped }: Props) => {
     }, [letterTyped]);
 
     return (
-        <div>
+        <div className="mb-4">
             {currentHiddenWord?.map((letter: string, index: number) => {
                 return (
                     <span

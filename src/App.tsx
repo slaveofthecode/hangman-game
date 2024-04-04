@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef, useContext } from 'react';
 import './App.css';
@@ -10,8 +11,9 @@ import Message from './components/Message';
 import { Context } from './context';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './store';
-import { getRandomInt } from './utils';
+import { getRandomInt, validateIsLoser, validateIsWinner } from './utils';
 import { getWords } from './store/features/play/thunk';
+import { setGameIsOver } from './store/features/play/slice';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const lettersTyped = new Set<string>();
@@ -20,8 +22,9 @@ function App() {
     const dispatch = useDispatch();
     const playStore = useSelector((state: RootState) => state.play);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { setHiddenWord } = useContext<any>(Context);
+    const { setHiddenWord, hiddenWord, inputLetters } = useContext(
+        Context,
+    ) as ContextType;
 
     const eventWindowKeyUp = useRef<(evt: KeyboardEvent) => void>();
 
@@ -52,6 +55,8 @@ function App() {
                 lettersTyped.add(letterEntered);
                 setLetterTyped(letterEntered);
             }
+
+            console.log('BB', inputLetters, hiddenWord);
         };
 
         if (showModal === false) {
@@ -69,6 +74,20 @@ function App() {
             window.removeEventListener('keyup', eventWindowKeyUp.current);
         }
     }, [playStore.data.gameIsOver]);
+
+    useEffect(() => {
+        if (hiddenWord) {
+            if (validateIsWinner(inputLetters.great, hiddenWord))
+                dispatch(setGameIsOver(true));
+            else if (
+                validateIsLoser(
+                    inputLetters.wrong,
+                    playStore.data.maximumAttempts,
+                )
+            )
+                dispatch(setGameIsOver(true));
+        }
+    }, [inputLetters.great, inputLetters.wrong]);
 
     return (
         <>
