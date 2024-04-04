@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import express from 'express';
-import router from './routes.js';
-import { connectToDB } from './db.js';
+import router from './routes.cjs';
+import { connectToDB } from './db.cjs';
 import dotenv from 'dotenv';
 import cors from 'cors'
 

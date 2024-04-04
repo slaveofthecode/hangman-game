@@ -1,4 +1,4 @@
-import { createSchema } from './db.js';
+import { createSchema } from './db.cjs';
 
 const models = await createSchema();
 
