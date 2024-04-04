@@ -1,4 +1,6 @@
-import { createSchema } from './db.cjs';
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { createSchema } = require('./db.cjs');
 
 const models = await createSchema();
 

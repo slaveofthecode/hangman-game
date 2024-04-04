@@ -1,5 +1,7 @@
-import express from 'express';
-import controller from './controller.cjs';
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const express = require('express');
+const controller = require('./controller.cjs');
 
 const router = express.Router();
 
