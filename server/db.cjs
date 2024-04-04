@@ -49,7 +49,11 @@ const createSchema = async () => {
 }
 
 
-export {
+// export {
+//     connectToDB,
+//     createSchema
+// }
+module.exports = {
     connectToDB,
     createSchema
-}
+};

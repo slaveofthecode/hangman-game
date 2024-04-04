@@ -39,4 +39,5 @@ const controller = {
     post
 }
 
-export default controller;
+// export default controller;
+module.exports = controller;
