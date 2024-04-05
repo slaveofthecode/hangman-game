@@ -3,7 +3,7 @@ import { useRef } from 'react';
 const DEFAULT_TIME = 500;
 
 const useDebounce = () => {
-    const debounceRef = useRef<number>();
+    const debounceRef = useRef<NodeJS.Timeout | undefined>();
     const debounce = (cb: () => void, time = DEFAULT_TIME) => {
         debounceRef.current && clearTimeout(debounceRef.current);
 
