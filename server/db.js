@@ -39,7 +39,14 @@ const createSchema = async () => {
         },
         createdAt: Date,
         updatedAt: Date,
-    })
+    });
+
+    // validate if exist model
+    if (mongoose.models.Words) {
+        return {
+            Words: mongoose.model('Words')
+        }
+    }
 
     const Words = mongoose.model('Words', WordsSchema, 'words');
 
