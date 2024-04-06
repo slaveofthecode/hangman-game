@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const router = require('./routes.js');
-const { connectToDB } = require('./db.js');
+const router = require('./router/routes.js');
+const { connectToDB } = require('./db/db.js');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
