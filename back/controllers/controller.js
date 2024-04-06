@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { createSchema } = require('./db.js');
+const { createSchema } = require('../db/db.js');
 
 
 async function get(req, res) {
