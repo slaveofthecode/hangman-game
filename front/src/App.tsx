@@ -54,8 +54,6 @@ function App() {
                 lettersTyped.add(letterEntered);
                 setLetterTyped(letterEntered);
             }
-
-            console.log('BB', inputLetters, hiddenWord);
         };
 
         if (showModal === false) {
