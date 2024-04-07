@@ -42,11 +42,11 @@ const createSchema = async () => {
     });
 
     // validate if exist model
-    if (mongoose.models.Words) {
+    if (mongoose.models.Words)
         return {
             Words: mongoose.model('Words')
         }
-    }
+    
 
     const Words = mongoose.model('Words', WordsSchema, 'words');
 
