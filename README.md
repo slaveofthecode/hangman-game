@@ -1,7 +1,6 @@
 # HANGMAN-GAME
-```
+
 Hangman is a famous game where you must guess a word by suggesting letters within a limited number of attempts. With each incorrect guess, a part of a hangman (typically represented as a stick figure) is drawn, symbolizing a hanging. The objective is to guess the word before the hangman is fully drawn, indicating a loss. It's a popular game for improving vocabulary and word recognition skills.
-```
 
 ----
 ----
