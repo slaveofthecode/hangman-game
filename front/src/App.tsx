@@ -89,6 +89,9 @@ function App() {
 			<div className="flex flex-col gap-3 justify-center items-center m-auto w-full">
 				{isMobile && <ForceShowKeyboard />}
 				<DrawingPerson />
+				{isMobile && (
+					<span className="absolute top-2 left-2 text-white">mobile</span>
+				)}
 				<HiddenWord letterTyped={letterTyped} />
 				<LettersTyped />
 				{playStore.data.gameIsOver && <Message />}
